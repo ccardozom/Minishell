@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
+/*   ft_strstop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccardozo <ccardozo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/15 08:51:32 by ccardozo          #+#    #+#             */
-/*   Updated: 2021/03/04 14:39:22 by ccardozo         ###   ########.fr       */
+/*   Created: 2021/03/04 14:13:58 by ccardozo          #+#    #+#             */
+/*   Updated: 2021/03/04 17:01:39 by ccardozo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(void const *content)
+char	*ft_strstop(char *dest, char *src, unsigned int n)
 {
-	t_list		*list;
+	unsigned int i;
 
-	if (!(list = (t_list*)malloc(sizeof(t_list))))
-		return (NULL);
-	if (!content)
-		list->content = NULL;
-	else
-		list->content = (void*)content;
-	list->next = NULL;
-	return (list);
+	i = 0;
+	while (src[i] != '\0' && i < n)
+	{
+		dest[i] = src[i];
+		++i;
+	}
+	if (i < n && src[i] == '\0')
+	{
+		while (dest[i] != '\0')
+		{
+			dest[i] = '\0';
+			++i;
+		}
+	}
+	return (dest);
 }

@@ -6,7 +6,7 @@
 /*   By: ccardozo <ccardozo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:42:17 by ccardozo          #+#    #+#             */
-/*   Updated: 2020/11/26 10:27:20 by ccardozo         ###   ########.fr       */
+/*   Updated: 2021/03/04 18:12:19 by ccardozo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,7 @@ void				ft_lstdelone(t_list *lst, void(*del)(void*));
 void				ft_lstclear(t_list **lst, void(*del)(void*));
 void				ft_lstiter(t_list *lst, void(*f)(void*));
 t_list				*ft_lstmap(t_list *ls, void*(*f)(void*), void(*del)(void*));
+char				*ft_strstop(char *dest, char *src, unsigned int n);
+char				*ft_strcpy(char *dest, char *src);
+char    *ft_strndup(const char *s1, size_t n);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccardozo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ccardozo <ccardozo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 08:58:33 by ccardozo          #+#    #+#             */
-/*   Updated: 2019/11/21 17:32:54 by ccardozo         ###   ########.fr       */
+/*   Updated: 2021/03/04 18:14:29 by ccardozo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ static size_t	count_segment(char const *s, char c)
 	return (counter);
 }
 
-static char		*ft_strndup(const char *s1, size_t n)
+static char	*ft_strnndup(const char *s1, size_t n)
 {
 	char	*clone;
 	size_t	i;
 
-	if ((clone = (char*)malloc(sizeof(char) * (n + 1))) == NULL)
+	clone = (char *)malloc(sizeof(char) * (n + 1));
+	if (clone == NULL)
 		return (NULL);
 	i = 0;
 	while (i < n)
@@ -50,9 +51,9 @@ static char		*ft_strndup(const char *s1, size_t n)
 	return (clone);
 }
 
-static void		*destroy_strs(char **strs)
+static void	*destroy_strs(char **strs)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (strs[i] != NULL)
@@ -61,7 +62,7 @@ static void		*destroy_strs(char **strs)
 	return (NULL);
 }
 
-char			**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	char	**strs;
 	size_t	tab_counter;
@@ -71,7 +72,8 @@ char			**ft_split(char const *s, char c)
 	if (s == NULL)
 		return (NULL);
 	tab_counter = count_segment(s, c);
-	if ((strs = (char**)malloc(sizeof(char*) * (tab_counter + 1))) == NULL)
+	strs = (char **)malloc(sizeof(char *) * (tab_counter + 1));
+	if (strs == NULL)
 		return (NULL);
 	tab_counter = 0;
 	j = -1;
@@ -82,7 +84,8 @@ char			**ft_split(char const *s, char c)
 		i = 0;
 		while (s[j + i] && s[j + i] != c)
 			i++;
-		if ((strs[tab_counter++] = ft_strndup(&s[j], i)) == NULL)
+		strs[tab_counter++] = ft_strnndup(&s[j], i);
+		if (strs[tab_counter] == NULL)
 			return (destroy_strs(strs));
 		j += i - 1;
 	}

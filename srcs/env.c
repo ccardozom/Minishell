@@ -1,49 +1,37 @@
 #include "../include/minishell.h"
 
+
+void imprimirlista(t_list *cabeza)
+{
+	t_list *naux = cabeza;
+
+	while (naux != NULL)
+	{
+		printf("%s \n", naux->content);
+		naux = naux->next;
+	}
+}
+
 void	capture_env(t_all *mini ,char **env)
 {
+	t_campo *datos;
+	t_control *control;
+	t_list	*lista;
 
-	t_env *nuevo;
-	t_env *renuevo;
-	int i=0,cont=0;
-	/*void	ft_lstadd_front(t_list **alst, t_list *new)
-{
-	if (!alst)
-		*alst = ft_lstnew((void *)new);
-	else
+	datos = NULL;
+	datos = malloc(sizeof(t_campo));
+	//printf("%lu \n",sizeof(t_campo));
+	while (*env)
 	{
-		new->next = *alst;
-		*alst = new;
-	}
-}*/
-
-	nuevo = malloc(sizeof(t_env));
-	i = strlen(*env);
-	while(cont < i)
-	{
-		//nuevo = malloc(sizeof(t_env));
-		if (!nuevo->string)
-		{	
-			nuevo->string = env[cont];
-			nuevo->next = NULL;
-			nuevo->prev = NULL;
-		}
+		insertardatos(&datos, *env);
+		/*if (!control->inicio)
+			control->inicio = ft_lstnew(datos);
 		else
-		{
-			renuevo = malloc(sizeof(t_env));
-			nuevo->next = renuevo->prev;
-			renuevo->string = env[cont];
-			nuevo = renuevo;
-		}
-		//printf("cadena = %s\n", nuevo->string);
-		cont++;
+			ft_lstadd_front(&lista, control->inicio);*/
+		env++;
+		printf("nombre = %s \n", datos->nombre);
+		printf("valor = %s \n", datos->valor);
 	}
-	while (nuevo->prev)
-	{
-		printf("cadena = %s\n",nuevo->string);
-		nuevo = nuevo->next;
-	}
-	//nuevo = nuevo->next;
-	//mini->start = nuevo;
-	//printf("El valor añadido a la lista es = %s", nuevo->string);
+	//imprimirlista(lista);
+	
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccardozo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ccardozo <ccardozo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/04 13:23:40 by ccardozo          #+#    #+#             */
-/*   Updated: 2019/11/11 19:27:33 by ccardozo         ###   ########.fr       */
+/*   Updated: 2021/03/04 14:25:05 by ccardozo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ void		*ft_memcpy(void *dst, const void *src, size_t n)
 		pdst[i] = psrc[i];
 		i++;
 	}
+	pdst[i] = '\0';
 	return (dst);
 }

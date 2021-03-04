@@ -6,7 +6,7 @@
 #    By: ccardozo <ccardozo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/11 11:08:48 by ccardozo          #+#    #+#              #
-#    Updated: 2020/11/26 10:26:55 by ccardozo         ###   ########.fr        #
+#    Updated: 2021/03/04 18:12:31 by ccardozo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,9 @@ FILES = 		ft_memset.c \
 				ft_putnbr_fd.c \
 				ft_strmapi.c \
 				ft_itoa.c \
+				ft_strstop.c \
+				ft_strcpy.c \
+								ft_strndup.c \
 				ft_strtrim.c 
 			
 BONUS = ft_lstadd_back_bonus.c \
