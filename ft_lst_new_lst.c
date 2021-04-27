@@ -10,7 +10,8 @@ t_lista	*ft_lst_new_lst(void *content)
 	new = (t_lista *)malloc(sizeof(t_lista));
 	if (!new)
 		return (NULL);
-	new->content = (void *)content;
+	new->content = content;
+	new->index = 0;
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);

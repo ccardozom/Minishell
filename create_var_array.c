@@ -63,7 +63,7 @@ char	**var_to_array(t_lista *lista)
 	int		cont;
 
 	i = 0;
-	array = (char **)malloc(sizeof(char *) * ft_lst_size_lst(lista) + 1);
+	array = (char **)malloc(sizeof(char *) * (ft_lst_size_lst(lista) + 1));
 	cont = ft_lst_size_lst(lista);
 	while (i < cont)
 	{

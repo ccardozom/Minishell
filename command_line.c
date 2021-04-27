@@ -1,147 +1,69 @@
 #include "minishell.h"
-# include <termios.h>
-# include <curses.h>
+#include <termios.h>
+#include <curses.h>
 #include <sys/ioctl.h>
 
-int	ft_putchar(int c)
+void	init_keyboard(struct termios term)
 {
-	write(1, &c, 1);
-	return (0);
+	struct termios	aux;
+
+	aux = term;
+	aux.c_lflag &= ~(ECHO);
+	aux.c_lflag &= ~(ICANON);
+	tcsetattr(0, TCSANOW, &aux);
+	tgetent(0, getenv("TERM"));
+	tputs(tgetstr("ks", 0), 1, ft_putchar);
 }
 
-
-void close_keyboard(struct termios ini)
+void	ini_aux(t_env *environ)
 {
-	tcsetattr(0, TCSANOW, &ini);
+	environ->str = 0;
+	environ->str_aux = NULL;
+	environ->lst_aux = NULL;
+	environ->index_ch = 0;
+	environ->check_esc = 0;
 }
 
-void	delete_char(char *cmdline)
+void	control_key(t_env *environ)
 {
-	int i;
-
-	i = strlen(cmdline);
-	cmdline[i] = '\0';
-}
-
-void	save_comand_line(t_env *environ)
-{
-	if (!environ->cli)
-		environ->cli = ft_lst_new_lst(environ->cmd_buffer);
-	else
-		ft_insert_nodo_ini(&environ->cli, ft_lst_new_lst(environ->cmd_buffer));
+	if (environ->str == '\e')
+		environ->check_esc = 1;
+	if (!ft_strcmp(environ->ch, tgetstr("ku", 0)))
+		environ->index_ch = cap_key_up(environ);
+	else if (!ft_strcmp(environ->ch, tgetstr("kd", 0)))
+		environ->index_ch = cap_key_down(environ);
+	else if (!ft_strcmp(environ->ch, tgetstr("kl", 0)))
+		environ->index_ch = cap_key_left(environ);
+	else if (!ft_strcmp(environ->ch, tgetstr("kr", 0)))
+		environ->index_ch = cap_key_right(environ);
+	else if (ft_isprint(environ->str) && environ->check_esc == FALSE)
+		environ->index_ch = cap_key_printable(environ, environ->lst_aux);
 }
 
 int	*read_cmdline(char **cmd, t_env *environ)
 {
-	char str;
-	char cmdline[2048];
-	char *char_aux;
-	struct termios term;
-	struct termios aux;
-	char ch[4];
-	int i = 0;
-	t_lista *lst_aux;
+	struct termios	term;
 
 	tcgetattr(0, &term);
-	aux = term;
-	term.c_lflag &= ~(ECHO);
-	term.c_lflag &= ~(ICANON);
-	tcsetattr(0, TCSANOW, &term);
-	tgetent(0, getenv("TERM"));
-	ft_bzero(cmdline, 2048);
-	str = 0;
+	init_keyboard(term);
+	ini_aux(environ);
 	tputs(save_cursor, 1, ft_putchar);
-	environ->cmd_buffer = NULL;
-	while (str != 10)
+	while (environ->str != NL_key)
 	{
-		read(0, &str, 1);
-		if (str != 127 && str != 10)
+		read(0, &environ->str, 1);
+		if (environ->str != DL_key && environ->str != NL_key)
 		{
-
-			ch[i++] = str;
-			if (!ft_strcmp(ch, "\033[A"))
-			{
-				tputs(restore_cursor, 1, ft_putchar);
-				tputs(tgetstr("ed", 0), 1, ft_putchar);
-				tputs(tgetstr("ce", 0), 1, ft_putchar);
-				if (environ->cli)
-				{
-					lst_aux = environ->cli;
-					ft_putstr_fd(lst_aux->content, 1);
-					environ->cmd_buffer = (void *)lst_aux->content;
-					environ->cli_len = ft_strlen(environ->cmd_buffer);
-					if (environ->cli->next)
-						environ->cli = environ->cli->next;
-				}
-				//write(1, "tecla arriba", 12);
-				i = 0;
-				ft_bzero(ch, 3);
-			}
-			else if (!ft_strcmp(ch, "\033[B"))
-			{
-				tputs(restore_cursor, 1, ft_putchar);
-				tputs(tgetstr("ed", 0), 1, ft_putchar);
-				tputs(tgetstr("ce", 0), 1, ft_putchar);
-				if (environ->cli)
-				{
-					lst_aux = environ->cli;
-					ft_putstr_fd(environ->cli->content, 1);
-					environ->cmd_buffer = lst_aux->content;
-					environ->cli_len = ft_strlen(environ->cmd_buffer);
-					if (environ->cli->prev)
-						environ->cli = environ->cli->prev;
-				}
-				//write(1, "tecla abajo", 11);
-				i = 0;
-				ft_bzero(ch, 4);
-			}
-			else if (!ft_strcmp(ch, "\033[D") || !ft_strcmp(ch, "\033[C"))
-			{
-				i = 0;
-				ft_bzero(ch, 4);
-			}
-			else if (ft_isalpha(str) || ft_isalnum(str))
-			{
-				write(1, &str, 1);
-				i = 0;
-				if (!char_aux)
-					char_aux = ft_strdup(ch);
-				else
-					char_aux = ft_strjoin(char_aux, ch);
-				environ->cli_len = ft_strlen(char_aux);
-				ft_bzero(ch, 4);
-			}
+			environ->ch[environ->index_ch++] = environ->str;
+			control_key(environ);
 		}
-		else if (str == 127)
+		else if (environ->str == DL_key)
+			cap_delete_char(environ);
+		else if (environ->str == NL_key)
 		{
-			if (environ->cmd_buffer && environ->cli_len > 0)
-			{
-				char_aux = environ->cmd_buffer;
-				tputs(cursor_left, 1, ft_putchar);
-				tputs(tgetstr("dm", 0), 1, ft_putchar);
-				tputs(tgetstr("dc", 0), 1, ft_putchar);
-				tputs(tgetstr("ed", 0), 1, ft_putchar);
-				int index_buffer = 0;
-				index_buffer = ft_strlen(char_aux);
-				char_aux[index_buffer - 1] = '\0';
-				environ->cli_len--;
-			}
+			*cmd = next_line_key(environ);
+			break ;
 		}
-		else if (str == 10)
-		{
-			environ->cmd_buffer = char_aux;
-			save_comand_line(environ);
-			break;
-		}
-		else
-		{
-			printf("entra4\n");
-		}
-		if (environ->lst->content)
-			;
-		if (str != '\n')
-			*cmd = &str;
 	}
-	tcsetattr(0, TCSANOW, &aux);
+	tcsetattr(0, TCSANOW, &term);
 	return (0);
 }

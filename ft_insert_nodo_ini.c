@@ -13,5 +13,5 @@ int	ft_insert_nodo_ini(t_lista **lst, t_lista *new)
 		*lst = new;
 		return (1);
 	}
-	return(0);
+	return (0);
 }

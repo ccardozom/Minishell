@@ -5,7 +5,7 @@
 
 int	ft_insert_nodo_fin(t_lista **lst, t_lista *new)
 {
-	t_lista *aux;
+	t_lista	*aux;
 
 	aux = *lst;
 	if (!(*lst))
@@ -18,5 +18,5 @@ int	ft_insert_nodo_fin(t_lista **lst, t_lista *new)
 		aux->next = new;
 		return (1);
 	}
-	return(0);
+	return (0);
 }

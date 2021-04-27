@@ -3,94 +3,97 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tsierra- <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: ccardozo <ccardozo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/07 17:05:33 by tsierra-          #+#    #+#              #
-#    Updated: 2021/03/08 16:57:20 by tsierra-         ###   ########.fr        #
+#    Created: 2019/11/11 11:08:48 by ccardozo          #+#    #+#              #
+#    Updated: 2021/03/04 18:28:13 by ccardozo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = libft
-
-LNAME = libft.a
+NAME = libft.a
 
 CFLAGS = -Wall -Werror -Wextra
 
 LFLAGS = -c
 
-LSOURCE = ft_memset.c \
-		  ft_bzero.c \
-		  ft_memcpy.c \
-		  ft_memccpy.c \
-		  ft_memmove.c \
-		  ft_memchr.c \
-		  ft_memcmp.c \
-		  ft_strlen.c \
-		  ft_isalpha.c \
-		  ft_isdigit.c \
-		  ft_isalnum.c \
-		  ft_isascii.c \
-		  ft_isprint.c \
-		  ft_toupper.c \
-		  ft_tolower.c \
-		  ft_strchr.c \
-		  ft_strrchr.c \
-		  ft_strncmp.c \
-		  ft_strlcpy.c \
-		  ft_strlcat.c \
-		  ft_strnstr.c \
-		  ft_atoi.c \
-		  ft_calloc.c \
-		  ft_strdup.c \
-		  ft_substr.c \
-		  ft_strjoin.c \
-		  ft_strtrim.c \
-		  ft_strncpy.c \
-		  ft_split.c \
-		  ft_itoa.c \
-		  ft_strmapi.c \
-		  ft_putchar_fd.c \
-		  ft_putstr_fd.c \
-		  ft_putendl_fd.c \
-		  ft_putnbr_fd.c \
-		  ft_strndup.c \
-		  get_next_line.c \
-		  ft_nbrlen.c \
-		  ft_strcmp.c \
-		  ft_free_tab.c \
-		  ft_is_str_digit.c \
-		  ft_file_format_cmp.c \
-		  ft_count_char_in_str.c \
-		  ft_is_color_range.c \
-		  ft_only_spaces_line.c \
-		  ft_str_tab_remove.c \
-		  ft_is_valid_file.c \
-		  ft_lstnew.c \
-		  ft_lstadd_front.c \
-		  ft_lstadd_back.c \
-		  ft_lstclear.c \
-		  ft_lstdelone.c \
-		  ft_lstiter.c \
-		  ft_lstlast.c \
-		  ft_lstmap.c \
-		  ft_lstsize.c \
-		  ft_lstfind.c \
-		  ft_strspn.c \
-		  ft_strcspn.c \
-		  ft_strtok.c
+FILES = 		ft_memset.c \
+				ft_strsearch.c \
+				ft_bzero.c \
+				ft_memcpy.c \
+				ft_memccpy.c \
+				ft_memmove.c \
+				ft_memchr.c \
+				ft_memcmp.c \
+				ft_isalpha.c \
+				ft_isdigit.c \
+				ft_isalnum.c \
+				ft_isascii.c \
+				ft_isprint.c \
+				ft_toupper.c \
+				ft_tolower.c \
+				ft_strchr.c \
+				ft_strlen.c \
+				ft_strrchr.c \
+				ft_strncmp.c \
+				ft_strcmp.c \
+				ft_strlcpy.c \
+				ft_strlcat.c \
+				ft_strnstr.c \
+				ft_atoi.c \
+				ft_calloc.c \
+				ft_strdup.c \
+				ft_substr.c \
+				ft_strjoin.c \
+				ft_split.c \
+				ft_putchar_fd.c \
+				ft_putstr_fd.c \
+				ft_putendl_fd.c \
+				ft_putnbr_fd.c \
+				ft_strmapi.c \
+				ft_itoa.c \
+				ft_strstop.c \
+				ft_strcpy.c \
+				ft_strndup.c \
+				ft_lstadd_back_bonus.c \
+		ft_lstadd_front_bonus.c \
+		ft_lstclear_bonus.c  \
+		ft_lstdelone_bonus.c \
+		ft_lstiter_bonus.c \
+		ft_lstlast_bonus.c \
+		ft_lstmap_bonus.c \
+		ft_lstnew_bonus.c \
+		ft_lstsize_bonus.c \
+				ft_strtrim.c 
+			
+BONUS = ft_lstadd_back_bonus.c \
+		ft_lstadd_front_bonus.c \
+		ft_lstclear_bonus.c  \
+		ft_lstdelone_bonus.c \
+		ft_lstiter_bonus.c \
+		ft_lstlast_bonus.c \
+		ft_lstmap_bonus.c \
+		ft_lstnew_bonus.c \
+		ft_lstsize_bonus.c 
 
-OBJS = $(LSOURCE:.c=.o)
+OBJ = ${FILES:.c=.o} 
+
+BON = ${BONUS:.c=.o}
 
 all: $(NAME)
 
-$(NAME):
-	gcc $(CFLAGS) $(LFLAGS) $(LSOURCE)
-	ar rc $(LNAME) $(OBJS) 
+$(NAME): $(FILES)
+	gcc $(CFLAGS) $(LFLAGS) $(FILES)
+	ar rc $(NAME) $(OBJ)
+
+bonus:  $(FILES) $(BON)
+	gcc $(CFLAGS) $(LFLAGS) $(FILES) $(BONUS)
+	ar rc $(NAME) $(OBJ) $(BON)
 
 clean:
-	rm -f $(OBJS)
-fclean:	clean
-	rm -f $(LNAME)
+	rm -f *.o
+
+fclean: clean
+	rm -f $(NAME)
 
 re: fclean all
 

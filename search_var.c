@@ -12,11 +12,13 @@ int	search_var_name(void *str, void *var)
 	return (0);
 }
 
-// recibe un nodo(list) y un nuevo value y modifica el contenido de la variable value del nodo por el nuevo
+// recibe un nodo(list) y un nuevo value y modifica 
+// el contenido de la variable value del nodo por el nuevo
 // devuelve la nueva lista
+
 t_list	*modify_value(t_list *list, char *value)
 {
-	t_var *var;
+	t_var	*var;
 
 	var = list->content;
 	free(var->value);

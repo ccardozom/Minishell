@@ -3,40 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsierra- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ccardozo <ccardozo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/13 12:41:03 by tsierra-          #+#    #+#             */
-/*   Updated: 2021/03/04 13:09:02 by tsierra-         ###   ########.fr       */
+/*   Created: 2019/11/08 08:20:01 by ccardozo          #+#    #+#             */
+/*   Updated: 2020/12/11 10:05:50 by ccardozo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+int				ft_atoi(const char *s)
 {
-	size_t		i;
-	int			neg;
-	long int	num;
+	int			p;
+	long int	nb;
 
-	i = 0;
-	neg = 1;
-	num = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
-		i++;
-	if (str[i] == '+' || str[i] == '-')
+	nb = 0;
+	if (ft_strcmp(s, "") == 0)
+		return (-1);
+	while (*s == 32 || (*s >= 9 && *s <= 13))
+		s++;
+	p = (*s == '-') ? -1 : 1;
+	(*s == '-' || *s == '+') ? s++ : s;
+	while (ft_isdigit(*s))
 	{
-		if (str[i] == '-')
-			neg = -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		num = num * 10 + (str[i] - '0');
-		i++;
-		if (num * neg > 2147483647)
+		nb = nb * 10 + (*s - '0');
+		s++;
+		if (nb * p > 2147483647)
 			return (-1);
-		if (num * neg < -2147483648)
+		if (nb * p < -2147483648)
 			return (0);
 	}
-	return (num * neg);
+	return (nb * p);
 }

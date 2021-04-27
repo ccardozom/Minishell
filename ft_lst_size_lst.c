@@ -3,7 +3,7 @@
 int	ft_lst_size_lst(t_lista *lst)
 {
 	int		size;
-	t_lista *aux;
+	t_lista	*aux;
 
 	aux = lst;
 	if (!aux)

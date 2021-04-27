@@ -16,22 +16,11 @@ char	*read_line(void)
 	return (line);
 }
 
-void	control_c(int c)
-{
-	c=2;
-	printf("\n");
-	print_prompt();
-}
-
 void	init_environ(t_env *environ)
 {
-	environ->lst = NULL;
-	environ->cmd_line = NULL;
-	environ->lst_control = NULL;
-	environ->var = NULL;
-	environ->cli = NULL;
-	environ->cmd_buffer = NULL;
-	environ->cli_len = 0;
+	ft_bzero(environ, sizeof(t_env));
+	environ->cmd_cursor = environ->cmd_buff;
+	create_empty_nodo(environ);
 }
 
 int	main(int argc, char *argv[], char **env)
@@ -43,18 +32,15 @@ int	main(int argc, char *argv[], char **env)
 
 	cont = argc;
 	str = *argv;
-	cmd = NULL;
 	init_environ(&environ);
-	capture(&environ, env); //está en el archivo evn.c
-	//ft_lst_iter_lst(environ.lst_control->inicio, imprimir_content);
-	//signal(SIGINT, &control_c);
-	while (1)
+	capture(&environ, env);
+	while (TRUE)
 	{
 		tputs(tgetstr("dl", 0), 1, ft_putchar);
 		print_prompt();
-		//cmd = read_line();
+		cmd = NULL;
 		read_cmdline(&cmd, &environ);
-		work_to_list(&environ, cmd); //está en el archivo work_to_list.c
+		work_to_list(&environ, cmd);
 		if (!ft_strcmp(cmd, "exit"))
 		{
 			system("leaks -fullContent minishell");
@@ -63,4 +49,3 @@ int	main(int argc, char *argv[], char **env)
 	}
 	return (0);
 }
-//esto es para probar pero hay que actualizarlo con la rama master

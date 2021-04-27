@@ -5,82 +5,90 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ccardozo <ccardozo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/01 16:02:41 by tsierra-          #+#    #+#             */
-/*   Updated: 2021/03/16 10:23:55 by ccardozo         ###   ########.fr       */
+/*   Created: 2019/11/14 08:58:33 by ccardozo          #+#    #+#             */
+/*   Updated: 2021/03/04 18:14:29 by ccardozo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	ft_word_count(char const *s, char c)
+static size_t	count_segment(char const *s, char c)
 {
-	int	i;
-	int	count;
+	size_t	counter;
+	int		i;
 
+	counter = 0;
 	i = 0;
-	count = 0;
-	while (s[i] != '\0')
+	while (s[i])
 	{
 		if (s[i] == c)
-			i++;
-		else
 		{
-			count++;
-			while (s[i] != c && s[i] != '\0')
-				i++;
-		}
-	}
-	return (count);
-}
-
-static int	ft_strnlen(char const *s, char c)
-{
-	int	count;
-
-	count = 0;
-	while (*s != c)
-	{
-		count++;
-		s++;
-	}
-	return (count);
-}
-
-static int	ft_tablecpy(char const *s, char **table, char c)
-{
-	int		word;
-	int		i;
-	int		j;
-
-	word = 0;
-	i = 0;
-	j = 0;
-	while (word < ft_word_count(s, c))
-	{
-		table[word] = malloc(sizeof(char) * ft_strnlen(&s[i], c) + 1);
-		if (!table[word])
-			return (0);
-		j = 0;
-		while (s[i] == c)
 			i++;
-		while (s[i] != c && s[i])
-			table[word][j++] = s[i++];
-		table[word++][j] = '\0';
+			continue ;
+		}
+		counter++;
+		while (s[i] && s[i] != c)
+			i++;
 	}
-	table[word] = NULL;
-	return (1);
+	return (counter);
+}
+
+static char	*ft_strnndup(const char *s1, size_t n)
+{
+	char	*clone;
+	size_t	i;
+
+	clone = (char *)malloc(sizeof(char) * (n + 1));
+	if (clone == NULL)
+		return (NULL);
+	i = 0;
+	while (i < n)
+	{
+		clone[i] = s1[i];
+		i++;
+	}
+	clone[i] = '\0';
+	return (clone);
+}
+
+static void	*destroy_strs(char **strs)
+{
+	int	i;
+
+	i = 0;
+	while (strs[i] != NULL)
+		free(strs[i++]);
+	free(strs);
+	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**table;
+	char	**strs;
+	size_t	tab_counter;
+	size_t	i;
+	size_t	j;
 
-	if (!s)
+	if (s == NULL)
 		return (NULL);
-	table = malloc(sizeof(char *) * ft_word_count(s, c) + 1);
-	if (!table)
+	tab_counter = count_segment(s, c);
+	strs = (char **)malloc(sizeof(char *) * (tab_counter + 1));
+	if (strs == NULL)
 		return (NULL);
-	if (!ft_tablecpy(s, table, c))
-		return (NULL);
-	return (table);
+	tab_counter = 0;
+	j = -1;
+	while (s[++j])
+	{
+		if (s[j] == c)
+			continue ;
+		i = 0;
+		while (s[j + i] && s[j + i] != c)
+			i++;
+		strs[tab_counter++] = ft_strnndup(&s[j], i);
+		if (strs[tab_counter] == NULL)
+			return (destroy_strs(strs));
+		j += i - 1;
+	}
+	strs[tab_counter] = NULL;
+	return (strs);
 }
