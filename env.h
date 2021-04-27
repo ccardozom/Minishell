@@ -26,13 +26,6 @@ typedef struct s_lista
 	struct s_lista	*prev;
 }	t_lista;
 
-typedef struct s_control //estructura sin uso
-{
-	t_lista	*inicio;
-	t_lista	*fin;
-	int		contador;
-}	t_control;
-
 typedef struct s_environment
 {
 	char		str;
@@ -41,7 +34,6 @@ typedef struct s_environment
 	char		ch[4];
 	int			index_ch;
 	char		*cmd_line;
-	t_control	*lst_control;
 	t_var		*var;
 	t_lista		*lst;
 	t_lista		*cli;
@@ -56,23 +48,24 @@ int		capture(t_env *environ, char **env);
 int		search_var_name(void *str, void *var);
 int		*read_cmdline(char **cmd, t_env *environ);
 int		ft_putchar(int c);
-int		ft_insert_nodo_ini(t_lista **lst, t_lista *new);
+int		ft_insert_node_ini(t_lista **lst, t_lista *new);
 int		ft_insert_nodo_fin(t_lista **lst, t_lista *new);
 int		ft_lst_size_lst(t_lista *lst);
-int		cap_key_printable(t_env *environ, t_lista *lst_aux);
+int		cap_key_printable(t_env *environ);
 int		cap_key_left(t_env *environ);
 int		cap_key_right(t_env *environ);
 int		cap_key_up(t_env *environ);
 int		cap_key_down(t_env *environ);
 char	**var_to_array(t_lista *lista);
-char	*next_line_key(t_env *environ);
 char	*ft_strjoin_free(char *dst, char *src);
+void	find_history(t_env *environ);
 void	cap_delete_char(t_env *environ);
 void	free_array(char **str);
 void	ft_lst_iter_lst(t_lista *lst, void (*f)(void *));
-void	create_empty_nodo(t_env *environ);
-void	save_comand_line(t_env *environ);
-void	save_comand_line_clone(t_env *environ);
+void	create_empty_node(t_env *environ);
+void	create_node(t_env *environ);
+void	create_clon_node(t_env *environ);
+t_line	*next_line_key(t_env *environ);
 t_var	*array_to_var(char *str);
 t_lista	*ft_lst_new_lst(void *content);
 void	imprimir_content(void *cabeza);	//esta definicion es para hacer pruebas de impresion de la variable content de una lista

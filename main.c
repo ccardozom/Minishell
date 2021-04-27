@@ -5,33 +5,18 @@ void	print_prompt(void)
 	ft_putstr_fd("minishell$ ", 1);
 }
 
-char	*read_line(void)
-{
-	char	*line;
-
-	if (get_next_line(0, &line) < 0)
-	{
-		ft_putstr_fd("error", 2);
-	}
-	return (line);
-}
-
 void	init_environ(t_env *environ)
 {
 	ft_bzero(environ, sizeof(t_env));
 	environ->cmd_cursor = environ->cmd_buff;
-	create_empty_nodo(environ);
+	create_empty_node(environ);
 }
 
 int	main(int argc, char *argv[], char **env)
 {
 	char	*cmd;
 	t_env	environ;
-	int		cont;
-	char	*str;
 
-	cont = argc;
-	str = *argv;
 	init_environ(&environ);
 	capture(&environ, env);
 	while (TRUE)

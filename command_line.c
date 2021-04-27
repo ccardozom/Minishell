@@ -27,7 +27,7 @@ void	ini_aux(t_env *environ)
 void	control_key(t_env *environ)
 {
 	if (environ->str == '\e')
-		environ->check_esc = 1;
+		environ->check_esc = TRUE;
 	if (!ft_strcmp(environ->ch, tgetstr("ku", 0)))
 		environ->index_ch = cap_key_up(environ);
 	else if (!ft_strcmp(environ->ch, tgetstr("kd", 0)))
@@ -37,12 +37,13 @@ void	control_key(t_env *environ)
 	else if (!ft_strcmp(environ->ch, tgetstr("kr", 0)))
 		environ->index_ch = cap_key_right(environ);
 	else if (ft_isprint(environ->str) && environ->check_esc == FALSE)
-		environ->index_ch = cap_key_printable(environ, environ->lst_aux);
+		environ->index_ch = cap_key_printable(environ);
 }
 
 int	*read_cmdline(char **cmd, t_env *environ)
 {
 	struct termios	term;
+	t_line *line;
 
 	tcgetattr(0, &term);
 	init_keyboard(term);
@@ -60,10 +61,12 @@ int	*read_cmdline(char **cmd, t_env *environ)
 			cap_delete_char(environ);
 		else if (environ->str == NL_key)
 		{
-			*cmd = next_line_key(environ);
+			line = next_line_key(environ);
+			*cmd = line->origin_line;
 			break ;
 		}
 	}
+	printf("cmd: %s\n", *cmd);
 	tcsetattr(0, TCSANOW, &term);
 	return (0);
 }

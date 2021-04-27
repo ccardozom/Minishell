@@ -3,7 +3,7 @@
 //recibe una lista y un string
 //agrega al inicio de la lista el nuevo nodo
 
-void	add_nodo_front(t_lista **lst, char *str)
+void	add_node_front(t_lista **lst, char *str)
 {
 	while ((*lst)->prev != NULL)
 		*lst = (*lst)->prev;

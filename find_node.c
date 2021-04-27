@@ -4,7 +4,7 @@
 	si encuentra la cadena en el elemento nombre de content
 	devuelve un puntero al nodo de lo contrario devuelve null*/
 
-char	*find_nodo(char *str, t_lista *lst)
+char	*find_node(char *str, t_lista *lst)
 {
 	t_var	*var;
 

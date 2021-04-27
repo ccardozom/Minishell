@@ -53,7 +53,7 @@ void	print_echo(char *cmd, t_lista *lst)
 	if (*cmd == '$')
 	{
 		cmd++;
-		var = find_nodo(cmd, lst);
+		var = find_node(cmd, lst);
 		if (var)
 			printf("%s\n", var);
 		else if (!var)
@@ -83,7 +83,7 @@ int	execute_command(t_env *environ, char *cmd, char **builtins)
 	}
 	else if (encuentra_export(cmd) == 0)
 	{
-		add_nodo_before_last(environ->lst, cmd);
+		add_node_before_last(environ->lst, cmd);
 	}
 	else if (encuentra_echo(cmd) == 0)
 	{
