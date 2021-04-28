@@ -17,9 +17,7 @@ void	init_keyboard(struct termios term)
 
 void	ini_aux(t_env *environ)
 {
-	environ->str = 0;
-	environ->str_aux = NULL;
-	environ->lst_aux = NULL;
+	environ->str = '\0';
 	environ->index_ch = 0;
 	environ->check_esc = 0;
 }
@@ -66,7 +64,6 @@ int	*read_cmdline(char **cmd, t_env *environ)
 			break ;
 		}
 	}
-	printf("cmd: %s\n", *cmd);
 	tcsetattr(0, TCSANOW, &term);
 	return (0);
 }

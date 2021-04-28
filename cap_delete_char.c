@@ -24,11 +24,6 @@ void	cap_delete_char(t_env *environ)
 		environ->cmd_cursor--;
 		*environ->cmd_cursor = '\0';
 		del_char_pos(environ);
-//		if (environ->cmd_buff[environ->cli_bufflen] == '\0')
-//			environ->cmd_buff[environ->cli_bufflen - 1] = '\0';
-//		else
-		{
-		}
 		environ->cli_bufflen--;
 	}
 }

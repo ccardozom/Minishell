@@ -14,5 +14,3 @@ int	capture(t_env *environ, char **env)
 	}
 	return (0);
 }
-//esto se puede cerrar como bueno
-// hay que modificar los argunmentos que recibe la funcion capture

@@ -12,6 +12,24 @@ void	init_environ(t_env *environ)
 	create_empty_node(environ);
 }
 
+void	free_lista(t_env *environ)
+{
+	t_line *line;
+	printf("ENTRA\n");
+	while (environ->cli->next)
+	{
+		line = environ->cli->content;
+		if (line->origin_line)
+			free(line->origin_line);
+		if (line->clone_line)
+			free(line->clone_line);
+		free(line);
+		environ->cli = environ->cli->next;
+	}
+	printf("sale\n");
+
+}
+
 int	main(int argc, char *argv[], char **env)
 {
 	char	*cmd;
@@ -28,6 +46,7 @@ int	main(int argc, char *argv[], char **env)
 		work_to_list(&environ, cmd);
 		if (!ft_strcmp(cmd, "exit"))
 		{
+			//free_lista(&environ);
 			system("leaks -fullContent minishell");
 			exit(0);
 		}

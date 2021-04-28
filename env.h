@@ -30,14 +30,12 @@ typedef struct s_environment
 {
 	char		str;
 	int			check_esc;
-	char		*str_aux;
 	char		ch[4];
 	int			index_ch;
 	char		*cmd_line;
 	t_var		*var;
 	t_lista		*lst;
 	t_lista		*cli;
-	t_lista		*lst_aux;
 	t_lista		*lst_cli;
 	char		cmd_buff[2048];
 	char		*cmd_cursor;
