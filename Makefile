@@ -18,7 +18,7 @@ INC = -I. -I$(LIBFT_DIR) -ltermcap
 LIBFT = -L $(LIBFT_DIR) -lft
 
 CC = gcc
-WFLAGS = -Wall -Wextra -g3 #-fsanitize=address
+WFLAGS = -Wall -Wextra -g3 -fsanitize=address
 MAKE = make
 RM = rm -rf
 

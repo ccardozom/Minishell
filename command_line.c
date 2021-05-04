@@ -30,10 +30,10 @@ void	control_key(t_env *environ)
 		environ->index_ch = cap_key_up(environ);
 	else if (!ft_strcmp(environ->ch, tgetstr("kd", 0)))
 		environ->index_ch = cap_key_down(environ);
-	else if (!ft_strcmp(environ->ch, tgetstr("kl", 0)))
-		environ->index_ch = cap_key_left(environ);
 	else if (!ft_strcmp(environ->ch, tgetstr("kr", 0)))
-		environ->index_ch = cap_key_right(environ);
+		;
+	else if (!ft_strcmp(environ->ch, tgetstr("kl", 0)))
+		;
 	else if (ft_isprint(environ->str) && environ->check_esc == FALSE)
 		environ->index_ch = cap_key_printable(environ);
 }

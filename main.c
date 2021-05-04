@@ -46,8 +46,8 @@ int	main(int argc, char *argv[], char **env)
 		work_to_list(&environ, cmd);
 		if (!ft_strcmp(cmd, "exit"))
 		{
-			//free_lista(&environ);
-			system("leaks -fullContent minishell");
+			free_lista(&environ);
+			//system("leaks -fullContent minishell");
 			exit(0);
 		}
 	}

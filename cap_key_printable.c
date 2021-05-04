@@ -11,9 +11,10 @@ int	cap_key_printable(t_env *environ)
 		*environ->cmd_cursor = *environ->ch;
 		environ->cli_bufflen++;
 		environ->cmd_cursor++;
+		*environ->cmd_cursor = '\0';
 	}
 	if (ft_strcmp(line->origin_line, ""))
-		line->clone_line = ft_strdup(environ->cmd_buff);
+		line->clone_line = environ->cmd_buff;
 	ft_bzero(environ->ch, sizeof(environ->ch));
 	environ->check_esc = 0;
 	return (0);

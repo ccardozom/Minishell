@@ -1,9 +1,8 @@
 #include "minishell.h"
 
 int	cap_key_left(t_env *environ)
-{
-	
-	if (environ->cli_bufflen > 0)
+{	
+	if (environ->cli_bufflen >= 1)
 	{
 		tputs(cursor_left, 1, ft_putchar);
 		environ->cli_bufflen--;
