@@ -44,5 +44,4 @@ void	create_node(t_env *environ)
 	}
 	new = ft_lst_new_lst(line);
 	insert_node_in_list(environ, new);
-	ft_bzero(environ->cmd_buff, sizeof(environ->cmd_buff));
 }

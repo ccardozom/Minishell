@@ -20,6 +20,7 @@ void	ini_aux(t_env *environ)
 	environ->str = '\0';
 	environ->index_ch = 0;
 	environ->check_esc = 0;
+	environ->cmd_cursor = environ->cmd_buff;
 }
 
 void	control_key(t_env *environ)
