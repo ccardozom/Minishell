@@ -42,7 +42,7 @@ int	main(int argc, char *argv[], char **env)
 		work_to_list(&environ, cmd);
 		if (!ft_strcmp(cmd, "exit"))
 		{
-			//free_lista(&environ);
+			free_lista(&environ);
 			exit(0);
 		}
 	}
