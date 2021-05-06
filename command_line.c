@@ -15,8 +15,9 @@ void	init_keyboard(struct termios term)
 	tputs(tgetstr("ks", 0), 1, ft_putchar);
 }
 
-void	ini_aux(t_env *environ)
+void	init_aux(t_env *environ, struct termios term)
 {
+	init_keyboard(term);
 	environ->str = '\0';
 	environ->index_ch = 0;
 	environ->check_esc = 0;
@@ -42,23 +43,22 @@ void	control_key(t_env *environ)
 int	*read_cmdline(char **cmd, t_env *environ)
 {
 	struct termios	term;
-	t_line *line;
+	t_line			*line;
 
 	tcgetattr(0, &term);
-	init_keyboard(term);
-	ini_aux(environ);
+	init_aux(environ, term);
 	tputs(save_cursor, 1, ft_putchar);
-	while (environ->str != NL_key)
+	while (environ->str != NL_KEY)
 	{
 		read(0, &environ->str, 1);
-		if (environ->str != DL_key && environ->str != NL_key)
+		if (environ->str != DL_KEY && environ->str != NL_KEY)
 		{
 			environ->ch[environ->index_ch++] = environ->str;
 			control_key(environ);
 		}
-		else if (environ->str == DL_key)
+		else if (environ->str == DL_KEY)
 			cap_delete_char(environ);
-		else if (environ->str == NL_key)
+		else if (environ->str == NL_KEY)
 		{
 			line = next_line_key(environ);
 			*cmd = line->origin_line;

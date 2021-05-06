@@ -2,7 +2,7 @@
 
 int	cap_key_printable(t_env *environ)
 {
-	t_line *line;
+	t_line	*line;
 
 	line = environ->cli->content;
 	write(1, &environ->str, 1);

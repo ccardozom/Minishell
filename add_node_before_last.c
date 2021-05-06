@@ -10,17 +10,20 @@ void	add_node_before_last(t_lista *lst, char *str)
 	t_lista	*aux;
 
 	aux = lst;
-	while (aux->next != NULL)
-		aux = aux->next;
-	while (*str != ' ')
-		str++;
-	str++;
 	if (ft_strchr(str, '='))
 	{
-		lista = ft_lst_new_lst(array_to_var(str));
-		lista->next = aux;
-		lista->prev = aux->prev;
-		aux->prev->next = lista;
-		aux->prev = lista;
+		if (set_env(str, lst) == 0)
+		{
+			while (*str != ' ')
+				str++;
+			str++;
+			while (aux->next != NULL)
+				aux = aux->next;
+			lista = ft_lst_new_lst(array_to_var(str));
+			lista->next = aux;
+			lista->prev = aux->prev;
+			aux->prev->next = lista;
+			aux->prev = lista;
+		}
 	}
 }

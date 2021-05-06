@@ -2,8 +2,8 @@
 
 int	cap_key_right(t_env *environ)
 {
-	t_line *line;
-	int	len;
+	t_line	*line;
+	int		len;
 
 	line = environ->cli->content;
 	if (line->clone_line)

@@ -13,7 +13,8 @@ void	init_environ(t_env *environ)
 
 void	free_lista(t_env *environ)
 {
-	t_line *line;
+	t_line	*line;
+
 	while (environ->cli->next)
 	{
 		line = environ->cli->content;

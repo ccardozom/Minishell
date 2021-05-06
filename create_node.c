@@ -2,7 +2,7 @@
 
 void	create_empty_node(t_env *environ)
 {
-	t_line *line;
+	t_line	*line;
 
 	line = malloc(sizeof(t_line));
 	line->origin_line = ft_strdup("");
@@ -26,8 +26,8 @@ void	insert_node_in_list(t_env *environ, t_lista *new)
 void	create_node(t_env *environ)
 {
 	t_lista	*new;
-	t_line *line;
-	t_line *content;
+	t_line	*line;
+	t_line	*content;
 
 	content = environ->cli->content;
 	line = malloc(sizeof(t_line));

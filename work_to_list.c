@@ -4,18 +4,12 @@
 // si lo encuentra devuelve 0 de lo contrario devuelve 1
 // --> esta función es solo para hacer pruebas
 
-int	encuentra_echo(char *cmd)
+int	find_echo(char *cmd, char *builtin)
 {
-	char	*token;
-	int		i;
-
-	token = "echo";
-	i = 0;
-	while (cmd[i] != ' ')
+	while (*builtin)
 	{
-		if (cmd[i] != token[i])
+		if (*cmd++ != *builtin++)
 			return (1);
-		i++;
 	}
 	return (0);
 }
@@ -24,12 +18,20 @@ int	encuentra_echo(char *cmd)
 // si lo encuentra devuelve 0 de lo contrario devuelve 1
 // --> esta función es solo para hacer pruebas
 
-int	encuentra_export(char *cmd)
+int	find_export(char *cmd, char *builtin)
+{
+	while (*builtin)
+		if (*cmd++ != *builtin++)
+			return (1);
+	return (0);
+}
+
+int	find_unset(char *cmd)
 {
 	char	*token;
 	int		i;
 
-	token = "export";
+	token = "unset";
 	i = 0;
 	while (cmd[i] != ' ')
 	{
@@ -46,23 +48,35 @@ int	encuentra_export(char *cmd)
 void	print_echo(char *cmd, t_lista *lst)
 {
 	char	*var;
+	int		check;
 
+	check = 0;
+	var = NULL;
 	while (*cmd != ' ')
 		cmd++;
 	cmd++;
+	if (*cmd == '-' && ((*cmd) + 1) == 'n')
+	{
+		check = 1;
+		cmd = cmd + 2;
+	}
 	if (*cmd == '$')
 	{
 		cmd++;
 		var = find_node(cmd, lst);
-		if (var)
+		if (var && check)
+			ft_putstr_fd(var, 1);
+		else if (var)
 			printf("%s\n", var);
 		else if (!var)
 			printf("\n");
 		else
 			printf("$\n");
 	}
-	else
+	else if (!check)
 		printf("%s\n", cmd);
+	else
+		ft_putstr_fd(cmd, 1);
 }
 
 //funcion para ejecutar los comandos
@@ -81,11 +95,15 @@ int	execute_command(t_env *environ, char *cmd, char **builtins)
 	{
 		imprimir_tabla(var_to_array(environ->lst));
 	}
-	else if (encuentra_export(cmd) == 0)
+	else if (find_export(cmd, builtins[3]) == 0)
 	{
 		add_node_before_last(environ->lst, cmd);
 	}
-	else if (encuentra_echo(cmd) == 0)
+	else if (find_unset(cmd) == 0)
+	{
+		ft_delete_node(environ->lst, cmd);
+	}
+	else if (find_echo(cmd, builtins[0]) == 0)
 	{
 		print_echo(cmd, environ->lst);
 	}
