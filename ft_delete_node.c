@@ -5,9 +5,6 @@ int	set_env_delete(char *str, t_lista *lst)
 	t_var	*var;
 	t_lista	*aux;
 
-	while (*str != ' ')
-		str++;
-	str++;
 	while (lst)
 	{
 		var = lst->content;

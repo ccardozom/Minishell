@@ -15,52 +15,52 @@ void	init_keyboard(struct termios term)
 	tputs(tgetstr("ks", 0), 1, ft_putchar);
 }
 
-void	init_aux(t_env *environ, struct termios term)
+void	init_aux(t_env *lst_env, struct termios term)
 {
 	init_keyboard(term);
-	environ->str = '\0';
-	environ->index_ch = 0;
-	environ->check_esc = 0;
-	environ->cmd_cursor = environ->cmd_buff;
+	lst_env->str = '\0';
+	lst_env->index_ch = 0;
+	lst_env->check_esc = 0;
+	lst_env->cmd_cursor = lst_env->cmd_buff;
 }
 
-void	control_key(t_env *environ)
+void	control_key(t_env *lst_env)
 {
-	if (environ->str == '\e')
-		environ->check_esc = TRUE;
-	if (!ft_strcmp(environ->ch, tgetstr("ku", 0)))
-		environ->index_ch = cap_key_up(environ);
-	else if (!ft_strcmp(environ->ch, tgetstr("kd", 0)))
-		environ->index_ch = cap_key_down(environ);
-	else if (!ft_strcmp(environ->ch, tgetstr("kr", 0)))
+	if (lst_env->str == '\e')
+		lst_env->check_esc = TRUE;
+	if (!ft_strcmp(lst_env->ch, tgetstr("ku", 0)))
+		lst_env->index_ch = cap_key_up(lst_env);
+	else if (!ft_strcmp(lst_env->ch, tgetstr("kd", 0)))
+		lst_env->index_ch = cap_key_down(lst_env);
+	else if (!ft_strcmp(lst_env->ch, tgetstr("kr", 0)))
 		;
-	else if (!ft_strcmp(environ->ch, tgetstr("kl", 0)))
+	else if (!ft_strcmp(lst_env->ch, tgetstr("kl", 0)))
 		;
-	else if (ft_isprint(environ->str) && environ->check_esc == FALSE)
-		environ->index_ch = cap_key_printable(environ);
+	else if (ft_isprint(lst_env->str) && lst_env->check_esc == FALSE)
+		lst_env->index_ch = cap_key_printable(lst_env);
 }
 
-int	*read_cmdline(char **cmd, t_env *environ)
+int	*read_cmdline(char **cmd, t_env *lst_env)
 {
 	struct termios	term;
 	t_line			*line;
 
 	tcgetattr(0, &term);
-	init_aux(environ, term);
+	init_aux(lst_env, term);
 	tputs(save_cursor, 1, ft_putchar);
-	while (environ->str != NL_KEY)
+	while (lst_env->str != NL_KEY)
 	{
-		read(0, &environ->str, 1);
-		if (environ->str != DL_KEY && environ->str != NL_KEY)
+		read(0, &lst_env->str, 1);
+		if (lst_env->str != DL_KEY && lst_env->str != NL_KEY)
 		{
-			environ->ch[environ->index_ch++] = environ->str;
-			control_key(environ);
+			lst_env->ch[lst_env->index_ch++] = lst_env->str;
+			control_key(lst_env);
 		}
-		else if (environ->str == DL_KEY)
-			cap_delete_char(environ);
-		else if (environ->str == NL_KEY)
+		else if (lst_env->str == DL_KEY)
+			cap_delete_char(lst_env);
+		else if (lst_env->str == NL_KEY)
 		{
-			line = next_line_key(environ);
+			line = next_line_key(lst_env);
 			*cmd = line->origin_line;
 			break ;
 		}

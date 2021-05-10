@@ -17,9 +17,6 @@ int	search_env_name(char *str, t_var *var)
 
 	i = 0;
 	variable = var;
-	while (*str != ' ')
-		str++;
-	str++;
 	while (str[i] != '=' && str[i] != '\0')
 		i++;
 	name = (char *)malloc(sizeof(char) * (i + 1));

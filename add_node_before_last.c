@@ -14,9 +14,6 @@ void	add_node_before_last(t_lista *lst, char *str)
 	{
 		if (set_env(str, lst) == 0)
 		{
-			while (*str != ' ')
-				str++;
-			str++;
 			while (aux->next != NULL)
 				aux = aux->next;
 			lista = ft_lst_new_lst(array_to_var(str));

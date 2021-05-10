@@ -1,21 +1,21 @@
 #include "minishell.h"
 
-int	cap_key_printable(t_env *environ)
+int	cap_key_printable(t_env *lst_env)
 {
 	t_line	*line;
 
-	line = environ->cli->content;
-	write(1, &environ->str, 1);
-	if (environ->cli_bufflen < 2048)
+	line = lst_env->cli->content;
+	write(1, &lst_env->str, 1);
+	if (lst_env->cli_bufflen < 2048)
 	{
-		*environ->cmd_cursor = *environ->ch;
-		environ->cli_bufflen++;
-		environ->cmd_cursor++;
-		*environ->cmd_cursor = '\0';
+		*lst_env->cmd_cursor = *lst_env->ch;
+		lst_env->cli_bufflen++;
+		lst_env->cmd_cursor++;
+		*lst_env->cmd_cursor = '\0';
 	}
 	if (*(line->origin_line))
-		line->clone_line = ft_strdup(environ->cmd_buff);
-	ft_bzero(environ->ch, sizeof(environ->ch));
-	environ->check_esc = 0;
+		line->clone_line = ft_strdup(lst_env->cmd_buff);
+	ft_bzero(lst_env->ch, sizeof(lst_env->ch));
+	lst_env->check_esc = 0;
 	return (0);
 }
