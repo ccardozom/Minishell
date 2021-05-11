@@ -48,10 +48,10 @@ int	find_unset(char *cmd)
 void	print_echo(char **cmd, t_lista *lst)
 {
 	char	*value;
+	char	*str_aux;
 	int		check;
 
 	check = 0;
-	value = NULL;
 	if (!ft_strcmp(*cmd, "-n"))
 	{
 		check = 1;
@@ -59,9 +59,11 @@ void	print_echo(char **cmd, t_lista *lst)
 	}
 	if (**cmd == '$')
 	{
-		if ()
+		str_aux = *cmd;
+		str_aux++;
+		if (*str_aux != '\0')
 		{
-			value = find_node(*cmd, lst);
+			value = find_node(str_aux, lst);
 			if (value && check)
 				ft_putstr_fd(value, 1);
 			else if (value)
@@ -108,7 +110,10 @@ int	execute_builtin(t_env *environ, char **cmdline, char **builtins)
 		}
 		else if (!find_builtin(*cmdline,  builtins[++i]))
 		{
-			cmdline++;
+			while (cmdline[i])
+				i++;
+			if (i > 0)
+				cmdline++;
 			print_echo(cmdline, environ->lst);
 		}
 	}
