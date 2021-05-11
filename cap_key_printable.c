@@ -10,6 +10,7 @@ int	cap_key_printable(t_env *lst_env)
 	{
 		*lst_env->cmd_cursor = *lst_env->ch;
 		lst_env->cli_bufflen++;
+		lst_env->len_cursor++;
 		lst_env->cmd_cursor++;
 		*lst_env->cmd_cursor = '\0';
 	}

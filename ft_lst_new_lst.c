@@ -11,7 +11,6 @@ t_lista	*ft_lst_new_lst(void *content)
 	if (!new)
 		return (NULL);
 	new->content = content;
-	new->index = 0;
 	new->prev = NULL;
 	new->next = NULL;
 	return (new);

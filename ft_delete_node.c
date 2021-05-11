@@ -15,7 +15,7 @@ int	set_env_delete(char *str, t_lista *lst)
 				aux = lst;
 				lst->prev->next = lst->next;
 				lst->next->prev = lst->prev;
-				free(aux);
+				free_node(aux);
 			}
 			return (1);
 		}
@@ -24,8 +24,12 @@ int	set_env_delete(char *str, t_lista *lst)
 	return (0);
 }
 
-int	ft_delete_node(t_lista *lst, char *str)
+int	ft_delete_node(t_lista *lst, char **str)
 {
-	set_env_delete(str, lst);
+	while (*str)
+	{
+		set_env_delete(*str, lst);
+		str++;
+	}
 	return (0);
 }

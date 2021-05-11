@@ -3,39 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccardozo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tsierra- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/05 11:17:59 by ccardozo          #+#    #+#             */
-/*   Updated: 2019/11/11 15:21:56 by ccardozo         ###   ########.fr       */
+/*   Created: 2019/11/07 15:31:37 by tsierra-          #+#    #+#             */
+/*   Updated: 2021/03/04 13:55:57 by tsierra-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stddef.h>
+#include "libft.h"
 
-void		*ft_memmove(void *dst, void *src, size_t len)
+void	*ft_memmove(void *dst, const void *src, size_t len)
 {
 	size_t	i;
-	char	*pdst;
-	char	*psrc;
+	char	*a;
+	char	*b;
 
-	pdst = (void*)dst;
-	psrc = (void*)src;
-	if (src == dst)
+	i = 0;
+	a = (void *)dst;
+	b = (void *)src;
+	if (dst == src)
 		return (dst);
 	if (src < dst)
 	{
 		i = len;
 		while (i-- > 0)
-			pdst[i] = psrc[i];
+			a[i] = b[i];
 	}
 	else
 	{
-		i = 0;
 		while (i < len)
 		{
-			pdst[i] = psrc[i];
+			a[i] = b[i];
 			i++;
 		}
 	}
-	return (dst);
+	return (a);
 }

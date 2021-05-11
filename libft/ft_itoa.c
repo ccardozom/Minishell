@@ -3,52 +3,56 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccardozo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tsierra- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/14 14:48:45 by ccardozo          #+#    #+#             */
-/*   Updated: 2019/11/21 10:57:07 by ccardozo         ###   ########.fr       */
+/*   Created: 2019/11/27 14:09:03 by tsierra-          #+#    #+#             */
+/*   Updated: 2021/03/04 17:26:18 by tsierra-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	count_len(unsigned int nb)
+static size_t	nbrlen(int nbr)
 {
-	unsigned int	size;
+	size_t	len;
 
-	size = 0;
-	while (nb >= 10)
+	len = 0;
+	if (nbr == 0)
+		return (1);
+	if (nbr < 0)
+		len++;
+	while (nbr)
 	{
-		nb /= 10;
-		++size;
+		nbr /= 10;
+		len++;
 	}
-	return (size + 1);
+	return (len);
 }
 
-char		*ft_itoa(int nbr)
+char	*ft_itoa(int n)
 {
-	char			*str;
-	unsigned int	nb;
-	unsigned int	i;
-	unsigned int	size;
+	char	*str;
+	size_t	i;
+	size_t	len;
 
-	if (nbr < 0)
-		nb = (unsigned int)(nbr * -1);
-	else
-		nb = (unsigned int)nbr;
-	size = (unsigned int)count_len(nb);
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	len = nbrlen(n);
+	str = malloc(sizeof(char) * len + 1);
+	if (!str)
+		return (NULL);
+	str[len] = '\0';
 	i = 0;
-	if (!(str = (char*)malloc(sizeof(char) * (size + 1 + (nbr < 0 ? 1 : 0)))))
-		return (0);
-	if (nbr < 0 && (str[i] = '-'))
-		size++;
-	i = size - 1;
-	while (nb >= 10)
+	if (n < 0)
 	{
-		str[i--] = (char)(nb % 10 + 48);
-		nb /= 10;
+		str[i] = '-';
+		n *= -1;
+		i++;
 	}
-	str[i] = (char)(nb % 10 + 48);
-	str[size] = '\0';
+	while (i < len)
+	{
+		str[len--] = (n % 10) + '0';
+		n /= 10;
+	}
 	return (str);
 }

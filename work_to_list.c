@@ -45,76 +45,60 @@ int	find_unset(char *cmd)
 // recibe un string y una lista
 // imprime en funcion de si encuetra $ o no
 
-void	print_echo(char **cmd, t_lista *lst)
+void	print_echo(char **cmd)
 {
-	char	*value;
-	char	*str_aux;
-	int		check;
+	int	check;
 
-	check = 0;
-	if (!ft_strcmp(*cmd, "-n"))
+	check = 1;
+	while (*cmd && !ft_strcmp(*cmd, "-n"))
 	{
-		check = 1;
+		check = 0;
 		cmd++;
 	}
-	if (**cmd == '$')
-	{
-		str_aux = *cmd;
-		str_aux++;
-		if (*str_aux != '\0')
-		{
-			value = find_node(str_aux, lst);
-			if (value && check)
-				ft_putstr_fd(value, 1);
-			else if (value)
-				printf("%s\n", value);
-			else if (!value)
-				printf("\n");
-		}
-		else
-			printf("$\n");
-	}
-	else if (!check)
-		printf("%s\n", *cmd);
-	else
+	if (*cmd)
 		ft_putstr_fd(*cmd, 1);
+	while (*cmd && *(++cmd))
+	{
+		ft_putstr_fd(" ", 1);
+		ft_putstr_fd(*cmd, 1);
+	}
+	if (check)
+		ft_putstr_fd("\n", 1);
 }
 
 //funcion para ejecutar los comandos
 //esta función es solo para hacer pruebas
 
-int	execute_builtin(t_env *environ, char **cmdline, char **builtins)
+int	execute_builtin(int argc, char **cmdline, t_env *_env) // esto deberia recibir con argumentos, (int argc, char *argv[], char *env[])
 {
 	char	cwd[2048];
 	int		i;
+	char	**tmp;
 
 	i = 0;
+	tmp = cmdline;
 	if (*cmdline)
 	{
-		if (!find_builtin(*cmdline, builtins[i]))
+		if (!find_builtin(*cmdline, "pwd"))
 		{
 			getcwd(cwd, sizeof(cwd));
 			printf("%s\n", cwd);
 		}
-		else if (!find_builtin(*cmdline,  builtins[++i]))
+		else if (!find_builtin(*cmdline, "env"))
+			imprimir_tabla(var_to_array(_env->lst));
+		else if (!find_builtin(*cmdline, "export"))
 		{
-			imprimir_tabla(var_to_array(environ->lst));
+			if (argc > 1)
+				add_node_before_last(_env->lst, &*(++cmdline));
+			else
+				;//print_export();
 		}
-		else if (!find_builtin(*cmdline,  builtins[++i]))
+		else if (!find_builtin(*cmdline, "unset"))
+			ft_delete_node(_env->lst, &*(++cmdline));
+		else if (!find_builtin(*cmdline, "echo"))
 		{
-			add_node_before_last(environ->lst,  cmdline[1]);
-		}
-		else if (!find_builtin(*cmdline,  builtins[++i]))
-		{
-			ft_delete_node(environ->lst, cmdline[1]);
-		}
-		else if (!find_builtin(*cmdline,  builtins[++i]))
-		{
-			while (cmdline[i])
-				i++;
-			if (i > 0)
-				cmdline++;
-			print_echo(cmdline, environ->lst);
+			cmdline++;
+			print_echo(cmdline);
 		}
 	}
 	return (0);
@@ -123,23 +107,23 @@ int	execute_builtin(t_env *environ, char **cmdline, char **builtins)
 //funcion para encontrar los comandos
 //esta función es solo para hacer pruebas
 
-int	work_to_list(t_env *environ, char *cmd)
+int	work_to_list(t_env *_env, char *cmd)
 {
-	char	**builtins;
 	char	**cmdline;
-
-	builtins = (char **)malloc(sizeof(char *) * 7);
-	builtins[0] = "pwd";
-	builtins[1] = "env";
-	builtins[2] = "export";
-	builtins[3] = "unset";
-	builtins[4] = "echo";
-	builtins[5] = "cd";
-	builtins[6] = "exit";
-	cmdline = ft_split(cmd, ' ');
-	execute_builtin(environ, cmdline, builtins);
-	while (environ->lst && environ->lst->prev != NULL)
-		environ->lst = environ->lst->prev;
-	free(builtins);
+	int		len;
+	//builtins[5] = "cd";
+	//builtins[6] = "exit";
+	if (cmd)
+	{
+		len = 0;
+		cmdline = ft_split(cmd, ' ');
+		while (cmdline[len])
+			len++;
+		printf("len: %d\n", len);
+		execute_builtin(len, cmdline, _env);
+		while (_env->lst && _env->lst->prev != NULL)
+			_env->lst = _env->lst->prev;
+		ft_free_tab(cmdline);
+	}
 	return (0);
 }

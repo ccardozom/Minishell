@@ -5,7 +5,8 @@ t_var	*change_value(char *str, t_var *var)
 	while (*str != '=')
 		str++;
 	str++;
-	var->value = str;
+	if (ft_strcmp(var->value ,str))
+		var->value = str;
 	return (var);
 }
 
@@ -22,7 +23,11 @@ int	search_env_name(char *str, t_var *var)
 	name = (char *)malloc(sizeof(char) * (i + 1));
 	ft_strlcpy(name, str, i + 1);
 	if (ft_strcmp(name, variable->name))
+	{
+		free(name);
 		return (1);
+	}
+	free(name);
 	return (0);
 }
 

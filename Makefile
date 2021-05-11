@@ -4,7 +4,7 @@ SRC_DIR = ./src/
 OBJ_DIR = ./obj/
 LIBFT_DIR = ./libft/
 
-SRC = main.c create_var_array.c env.c free_var.c search_var.c \
+SRC = main.c create_var_array.c env.c free_var.c free_node.c search_var.c \
 	work_to_list.c set_env.c ft_insert_node_fin.c ft_lst_new_lst.c \
 	add_node_before_last.c find_history.c find_node.c ft_delete_node.c \
 	lst_iter_lst.c ft_lst_size_lst.c ft_insert_node_ini.c \
@@ -18,7 +18,7 @@ INC = -I. -I$(LIBFT_DIR) -ltermcap
 LIBFT = -L $(LIBFT_DIR) -lft
 
 CC = gcc
-WFLAGS = -Wall -Wextra -g3 -fsanitize=address
+WFLAGS = -Wall -Wextra -O0 -g3 #-fsanitize=address
 MAKE = make
 RM = rm -rf
 

@@ -1,13 +1,13 @@
 #include "minishell.h"
 
-int	cap_key_down(t_env *environ)
+int	cap_key_down(t_env *_env)
 {
-	if (environ->cli->prev)
+	if (_env->cli->prev)
 	{
-		environ->cli = environ->cli->prev;
-		find_history(environ);
+		_env->cli = _env->cli->prev;
+		find_history(_env);
 	}
-	ft_bzero(environ->ch, sizeof(environ->ch));
-	environ->check_esc = 0;
+	ft_bzero(_env->ch, sizeof(_env->ch));
+	_env->check_esc = 0;
 	return (0);
 }

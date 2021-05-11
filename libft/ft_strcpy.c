@@ -6,9 +6,11 @@
 /*   By: ccardozo <ccardozo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/04 17:43:25 by ccardozo          #+#    #+#             */
-/*   Updated: 2021/03/04 17:43:39 by ccardozo         ###   ########.fr       */
+/*   Updated: 2021/05/05 11:23:02 by ccardozo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 char *ft_strcpy(char *dest, char *src)
 {
