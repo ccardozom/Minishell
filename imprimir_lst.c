@@ -24,5 +24,5 @@ void	imprimir_tabla(char **array)
 		printf("%s \n", array[i]);
 		i++;
 	}
-	free_array(array);
+	ft_free_tab(array);
 }

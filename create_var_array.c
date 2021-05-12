@@ -63,8 +63,10 @@ char	**var_to_array(t_lista *lista)
 	int		cont;
 
 	i = 0;
-	array = (char **)malloc(sizeof(char *) * (ft_lst_size_lst(lista) + 1));
+	var = NULL;
+	array = NULL;
 	cont = ft_lst_size_lst(lista);
+	array = (char **)malloc(sizeof(char *) * (cont + 1));
 	while (i < cont)
 	{
 		var = lista->content;

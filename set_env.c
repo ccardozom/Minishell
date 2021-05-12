@@ -2,11 +2,17 @@
 
 t_var	*change_value(char *str, t_var *var)
 {
+	char	*tmp;
+
 	while (*str != '=')
 		str++;
 	str++;
-	if (ft_strcmp(var->value ,str))
+	if (ft_strcmp(var->value, str))
+	{
+		tmp = var->value;
 		var->value = str;
+		free(tmp);
+	}
 	return (var);
 }
 

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tsierra- <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ccardozo <ccardozo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/01 18:32:31 by tsierra-          #+#    #+#             */
-/*   Updated: 2021/04/06 17:11:35 by tsierra-         ###   ########.fr       */
+/*   Updated: 2021/05/12 17:50:30 by ccardozo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 void	ft_free_tab(char **ptr)
 {
