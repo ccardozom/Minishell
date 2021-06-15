@@ -22,7 +22,12 @@ void	ft_lstclear(t_list **lst, void (*del)(void *))
 	while (aux)
 	{
 		tmp = aux->next;
+<<<<<<< HEAD
 		del(aux->content);
+=======
+		if (del)
+			del(aux->content);
+>>>>>>> 5f5a09d68684605e50abeacb76bd6e328a749aa3
 		free(aux);
 		aux = tmp;
 	}
